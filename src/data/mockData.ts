@@ -428,7 +428,7 @@ export const analyticsReports: AnalyticsReport[] = [
   },
   {
     id: 'ar2',
-    title: 'Biometric Improvements Quarterly',
+    title: 'Health Improvements Tracking Quarterly',
     description: 'Analysis of patient biometric changes over the last quarter',
     generatedAt: '2025-06-15T00:00:00Z',
     type: 'biometrics',
@@ -441,7 +441,7 @@ export const analyticsReports: AnalyticsReport[] = [
   },
   {
     id: 'ar3',
-    title: 'Diabetes Management Outcomes',
+    title: 'Predictive Analysis Outcomes',
     description: 'Effectiveness of diabetes management plans across all patients',
     generatedAt: '2025-05-30T00:00:00Z',
     type: 'progress',

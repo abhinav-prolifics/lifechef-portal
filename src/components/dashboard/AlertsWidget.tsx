@@ -1,10 +1,10 @@
+import { AlertTriangle, Bell, MessageCircle } from 'lucide-react';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { AlertTriangle, Bell, MessageCircle } from 'lucide-react';
-import Card from '../ui/Card';
-import Badge from '../ui/Badge';
 import { alerts, patients } from '../../data/mockData';
 import { Alert } from '../../types';
+import Badge from '../ui/Badge';
+import Card from '../ui/Card';
 
 const AlertsWidget: React.FC = () => {
   const getAlertIcon = (type: Alert['type']) => {
@@ -60,7 +60,7 @@ const AlertsWidget: React.FC = () => {
         {sortedAlerts.slice(0, 5).map((alert) => (
           <div 
             key={alert.id} 
-            className={`py-3 flex items-start space-x-3 ${!alert.isRead ? 'bg-emerald-50' : ''}`}
+            className={`py-3 px-2 flex items-start space-x-3 ${!alert.isRead ? 'bg-emerald-50' : ''}`}
           >
             <div className="flex-shrink-0 mt-0.5">
               {getAlertIcon(alert.type)}

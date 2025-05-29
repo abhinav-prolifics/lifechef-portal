@@ -1,19 +1,19 @@
-import React, { useState } from 'react';
-import { Outlet, NavLink, Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
 import {
-  LayoutDashboard,
-  Users,
-  ClipboardList,
-  MessageCircle,
   BarChart3,
-  Menu,
-  X,
   Bell,
-  LogOut,
   ChevronDown,
+  ClipboardList,
+  LayoutDashboard,
+  LogOut,
+  Menu,
+  MessageCircle,
+  Users,
+  X,
 } from 'lucide-react';
+import React, { useState } from 'react';
+import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom';
 import Avatar from '../components/ui/Avatar';
+import { useAuth } from '../context/AuthContext';
 import { alerts } from '../data/mockData';
 
 const MainLayout: React.FC = () => {
@@ -163,7 +163,7 @@ const MainLayout: React.FC = () => {
                 ))}
               </nav>
             </div>
-            {user && (
+            {/* {user && (
               <div className="flex-shrink-0 border-t border-gray-200 p-4">
                 <div className="flex items-center">
                   <Avatar
@@ -179,7 +179,7 @@ const MainLayout: React.FC = () => {
                   </div>
                 </div>
               </div>
-            )}
+            )} */}
           </div>
         </div>
       </div>

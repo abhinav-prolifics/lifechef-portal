@@ -1,19 +1,20 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Search, Filter, SortAsc, SortDesc, AlertTriangle } from 'lucide-react';
-import Card from '../components/ui/Card';
-import Avatar from '../components/ui/Avatar';
-import Badge from '../components/ui/Badge';
-import Button from '../components/ui/Button';
-import Input from '../components/ui/Input';
-import AddPatientModal from '../components/patients/AddPatientModal';
-import { patients } from '../data/mockData';
-import { Patient } from '../types';
+import { AlertTriangle, Filter, Search, SortAsc, SortDesc } from "lucide-react";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import AddPatientModal from "../components/patients/AddPatientModal";
+import Avatar from "../components/ui/Avatar";
+import Badge from "../components/ui/Badge";
+import Button from "../components/ui/Button";
+import Card from "../components/ui/Card";
+import Input from "../components/ui/Input";
+import { patients } from "../data/mockData";
+import { Patient } from "../types";
 
 const Patients: React.FC = () => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [sortField, setSortField] = useState<keyof Pick<Patient, 'name' | 'adherenceRate'>>('name');
-  const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
+  const [searchTerm, setSearchTerm] = useState("");
+  const [sortField, setSortField] =
+    useState<keyof Pick<Patient, "name" | "adherenceRate">>("name");
+  const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
   const [filterCondition, setFilterCondition] = useState<string | null>(null);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
@@ -26,23 +27,25 @@ const Patients: React.FC = () => {
   const filteredPatients = patients
     .filter((patient) => {
       // Apply search filter
-      const matchesSearch = patient.name.toLowerCase().includes(searchTerm.toLowerCase());
-      
+      const matchesSearch = patient.name
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase());
+
       // Apply condition filter if selected
       const matchesCondition = filterCondition
         ? patient.conditions.includes(filterCondition)
         : true;
-      
+
       return matchesSearch && matchesCondition;
     })
     .sort((a, b) => {
       // Apply sorting
-      if (sortField === 'name') {
-        return sortDirection === 'asc'
+      if (sortField === "name") {
+        return sortDirection === "asc"
           ? a.name.localeCompare(b.name)
           : b.name.localeCompare(a.name);
       } else {
-        return sortDirection === 'asc'
+        return sortDirection === "asc"
           ? a.adherenceRate - b.adherenceRate
           : b.adherenceRate - a.adherenceRate;
       }
@@ -50,10 +53,10 @@ const Patients: React.FC = () => {
 
   const toggleSort = (field: typeof sortField) => {
     if (sortField === field) {
-      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+      setSortDirection(sortDirection === "asc" ? "desc" : "asc");
     } else {
       setSortField(field);
-      setSortDirection('asc');
+      setSortDirection("asc");
     }
   };
 
@@ -67,9 +70,10 @@ const Patients: React.FC = () => {
     }
   };
 
-  const handleAddPatient = (patientData: any) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleAddPatient = (patientData:any) => {
     // In a real app, this would make an API call
-    console.log('Adding new patient:', patientData);
+    console.log("Adding new patient:", patientData);
     // For demo purposes, we could add to the mock data
     const newPatient: Patient = {
       id: `p${patients.length + 1}`,
@@ -79,7 +83,8 @@ const Patients: React.FC = () => {
       alerts: [],
       biometrics: [],
       careTeam: [],
-      avatar: 'https://images.pexels.com/photos/2379005/pexels-photo-2379005.jpeg?auto=compress&cs=tinysrgb&w=300',
+      avatar:
+        "https://images.pexels.com/photos/2379005/pexels-photo-2379005.jpeg?auto=compress&cs=tinysrgb&w=300",
     };
     patients.push(newPatient);
   };
@@ -107,8 +112,8 @@ const Patients: React.FC = () => {
           <div className="w-full sm:w-1/2 flex gap-2">
             <div className="relative flex-1">
               <select
-                className="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm rounded-md"
-                value={filterCondition || ''}
+                className="appearance-none block w-full pl-3 pr-10 py-2 text-base  border-gray-300 focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm rounded-md bg-white"
+                value={filterCondition || ""}
                 onChange={(e) => setFilterCondition(e.target.value || null)}
               >
                 <option value="">All Conditions</option>
@@ -118,14 +123,12 @@ const Patients: React.FC = () => {
                   </option>
                 ))}
               </select>
-              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-500">
+
+              <div className="pointer-events-none absolute inset-y-0 right-4  flex items-center px-2 text-gray-500">
                 <Filter className="h-4 w-4" />
               </div>
             </div>
-            <Button 
-              variant="secondary"
-              onClick={() => setIsAddModalOpen(true)}
-            >
+            <Button variant="secondary" onClick={() => setIsAddModalOpen(true)}>
               Add Patient
             </Button>
           </div>
@@ -140,12 +143,12 @@ const Patients: React.FC = () => {
                   className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                 >
                   <button
-                    onClick={() => toggleSort('name')}
+                    onClick={() => toggleSort("name")}
                     className="group flex items-center space-x-1 focus:outline-none"
                   >
                     <span>Patient</span>
-                    {sortField === 'name' ? (
-                      sortDirection === 'asc' ? (
+                    {sortField === "name" ? (
+                      sortDirection === "asc" ? (
                         <SortAsc className="h-4 w-4 text-emerald-500" />
                       ) : (
                         <SortDesc className="h-4 w-4 text-emerald-500" />
@@ -166,12 +169,12 @@ const Patients: React.FC = () => {
                   className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                 >
                   <button
-                    onClick={() => toggleSort('adherenceRate')}
+                    onClick={() => toggleSort("adherenceRate")}
                     className="group flex items-center space-x-1 focus:outline-none"
                   >
                     <span>Adherence</span>
-                    {sortField === 'adherenceRate' ? (
-                      sortDirection === 'asc' ? (
+                    {sortField === "adherenceRate" ? (
+                      sortDirection === "asc" ? (
                         <SortAsc className="h-4 w-4 text-emerald-500" />
                       ) : (
                         <SortDesc className="h-4 w-4 text-emerald-500" />
@@ -204,7 +207,10 @@ const Patients: React.FC = () => {
             <tbody className="bg-white divide-y divide-gray-200">
               {filteredPatients.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="px-6 py-12 text-center text-gray-500">
+                  <td
+                    colSpan={6}
+                    className="px-6 py-12 text-center text-gray-500"
+                  >
                     No patients found matching your search criteria
                   </td>
                 </tr>
@@ -221,7 +227,7 @@ const Patients: React.FC = () => {
                           />
                         </div>
                         <div className="ml-4">
-                          <Link 
+                          <Link
                             to={`/patients/${patient.id}`}
                             className="text-sm font-medium text-emerald-700 hover:text-emerald-900"
                           >
@@ -257,15 +263,18 @@ const Patients: React.FC = () => {
                         <div className="flex items-center">
                           <AlertTriangle
                             className={`h-5 w-5 ${
-                              patient.alerts.some((a) => a.severity === 'high')
-                                ? 'text-red-500'
-                                : patient.alerts.some((a) => a.severity === 'medium')
-                                ? 'text-yellow-500'
-                                : 'text-blue-500'
+                              patient.alerts.some((a) => a.severity === "high")
+                                ? "text-red-500"
+                                : patient.alerts.some(
+                                    (a) => a.severity === "medium"
+                                  )
+                                ? "text-yellow-500"
+                                : "text-blue-500"
                             }`}
                           />
                           <span className="ml-1 text-sm text-gray-700">
-                            {patient.alerts.length} alert{patient.alerts.length !== 1 ? 's' : ''}
+                            {patient.alerts.length} alert
+                            {patient.alerts.length !== 1 ? "s" : ""}
                           </span>
                         </div>
                       ) : (

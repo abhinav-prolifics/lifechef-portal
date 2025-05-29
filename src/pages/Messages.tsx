@@ -1,11 +1,11 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { ArrowLeft, Send, Paperclip, User, Search, MessageCircle } from 'lucide-react';
+import { ArrowLeft, MessageCircle, Paperclip, Search, Send, User } from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react';
 import Avatar from '../components/ui/Avatar';
 import Button from '../components/ui/Button';
 import Input from '../components/ui/Input';
-import { conversations, messages, patients, users } from '../data/mockData';
 import { useAuth } from '../context/AuthContext';
-import { Message, User as UserType, Patient } from '../types';
+import { conversations, messages, patients, users } from '../data/mockData';
+import { Message } from '../types';
 
 const Messages: React.FC = () => {
   const { state } = useAuth();
@@ -40,7 +40,7 @@ const Messages: React.FC = () => {
     ? messages.filter(msg => 
         activeConversation.participants.includes(msg.senderId) && 
         activeConversation.participants.includes(msg.recipientId)
-      ).sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime())
+      ).sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())
     : [];
 
   // Get participant details

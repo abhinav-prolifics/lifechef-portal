@@ -1,10 +1,9 @@
+import { MessageSquare } from 'lucide-react';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { MessageSquare } from 'lucide-react';
-import Card from '../ui/Card';
+import { conversations, patients, users } from '../../data/mockData';
 import Avatar from '../ui/Avatar';
-import { conversations, messages, patients, users } from '../../data/mockData';
-import { User, Patient } from '../../types';
+import Card from '../ui/Card';
 
 const RecentMessages: React.FC = () => {
   // Sort conversations by last message timestamp
@@ -73,17 +72,19 @@ const RecentMessages: React.FC = () => {
                     {formatTime(conversation.lastMessage.timestamp)}
                   </span>
                 </div>
-                <p className="text-sm text-gray-500 truncate">
+                 <div className="flex justify-between">
+                  <p className="text-sm text-gray-500 truncate">
                   {conversation.lastMessage.content}
                 </p>
-              </div>
-              {conversation.unreadCount > 0 && (
-                <div className="flex-shrink-0">
+                   {conversation.unreadCount > 0 && (
+                <div className="fl">
                   <span className="inline-flex items-center justify-center h-5 w-5 rounded-full bg-emerald-500 text-white text-xs">
                     {conversation.unreadCount}
                   </span>
                 </div>
               )}
+                </div>
+              </div>
             </div>
           );
         })}

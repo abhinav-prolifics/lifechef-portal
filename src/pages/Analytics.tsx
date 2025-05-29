@@ -1,12 +1,22 @@
+import { ArrowUpRight, Download, Minus, TrendingDown, TrendingUp } from 'lucide-react';
 import React, { useState } from 'react';
-import { 
-  BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, 
-  XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer 
+import {
+  Bar,
+  BarChart,
+  CartesianGrid,
+  Cell,
+  Legend,
+  Line,
+  LineChart,
+  Pie,
+  PieChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis, YAxis
 } from 'recharts';
-import { Download, Filter, ArrowUpRight, TrendingUp, TrendingDown, Minus } from 'lucide-react';
-import Card from '../components/ui/Card';
 import Button from '../components/ui/Button';
-import { analyticsReports, adherenceHistory, patients } from '../data/mockData';
+import Card from '../components/ui/Card';
+import { adherenceHistory, analyticsReports, patients } from '../data/mockData';
 
 const Analytics: React.FC = () => {
   const [timeframe, setTimeframe] = useState<'7d' | '30d' | '90d'>('30d');

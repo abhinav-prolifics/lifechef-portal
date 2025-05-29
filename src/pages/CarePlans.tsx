@@ -1,9 +1,9 @@
+import { Calendar, CheckCircle2, Clock, Filter, Plus, Search } from 'lucide-react';
 import React, { useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
-import { Search, Filter, Plus, Calendar, Clock, CheckCircle2 } from 'lucide-react';
-import Card from '../components/ui/Card';
 import Badge from '../components/ui/Badge';
 import Button from '../components/ui/Button';
+import Card from '../components/ui/Card';
 import Input from '../components/ui/Input';
 import { carePlans, patients } from '../data/mockData';
 import { CarePlan } from '../types';
@@ -104,7 +104,7 @@ const CarePlans: React.FC = () => {
           <div className="w-full sm:w-1/2 flex gap-2">
             <div className="relative flex-1">
               <select
-                className="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm rounded-md"
+                className="appearance-none block w-full pl-3 pr-10 py-2 text-base  border-gray-300 focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm rounded-md bg-white"
                 value={filterStatus}
                 onChange={(e) => setFilterStatus(e.target.value as CarePlan['status'] | 'all')}
               >
@@ -119,7 +119,7 @@ const CarePlans: React.FC = () => {
             </div>
             <div className="relative flex-1">
               <select
-                className="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm rounded-md"
+                className="appearance-none block w-full pl-3 pr-10 py-2 text-base  border-gray-300 focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm rounded-md bg-white"
                 value={filterPatientId}
                 onChange={(e) => setFilterPatientId(e.target.value)}
               >
