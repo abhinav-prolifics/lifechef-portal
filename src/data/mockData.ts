@@ -344,6 +344,15 @@ export const carePlans: CarePlan[] = [
   },
 ];
 
+
+export const allMealPlans = carePlans.flatMap((plan) =>
+  plan.meals.map((mealPlan) => ({
+    ...mealPlan,
+    category: plan.title, 
+  }))
+);
+
+
 // Mock Messages
 export const messages: Message[] = [
   {
