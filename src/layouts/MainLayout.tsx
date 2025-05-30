@@ -43,21 +43,32 @@ const MainLayout: React.FC = () => {
   };
 
   const formatNotificationTime = (timestamp: string) => {
-    const date = new Date(timestamp);
-    const now = new Date();
-    const diffMs = now.getTime() - date.getTime();
-    const diffMins = Math.floor(diffMs / 60000);
-    const diffHours = Math.floor(diffMins / 60);
-    const diffDays = Math.floor(diffHours / 24);
+  const date = new Date(timestamp);
+  const now = new Date();
+  const diffMs = now.getTime() - date.getTime();
 
-    if (diffMins < 60) {
-      return `${diffMins} min${diffMins !== 1 ? 's' : ''} ago`;
-    } else if (diffHours < 24) {
-      return `${diffHours} hour${diffHours !== 1 ? 's' : ''} ago`;
-    } else {
-      return `${diffDays} day${diffDays !== 1 ? 's' : ''} ago`;
-    }
-  };
+  // If the timestamp is in the future
+  if (diffMs < 0) return "Just now";
+
+  const diffSecs = Math.floor(diffMs / 1000);
+  const diffMins = Math.floor(diffSecs / 60);
+  const diffHours = Math.floor(diffMins / 60);
+  const diffDays = Math.floor(diffHours / 24);
+
+  const minutes = diffMins % 60;
+  const hours = diffHours % 24;
+
+  if (diffDays > 0) {
+    return `${diffDays} day${diffDays > 1 ? 's' : ''}, ${hours} hr${hours !== 1 ? 's' : ''} ago`;
+  } else if (diffHours > 0) {
+    return `${diffHours} hour${diffHours !== 1 ? 's' : ''}, ${minutes} min${minutes !== 1 ? 's' : ''} ago`;
+  } else if (diffMins > 0) {
+    return `${diffMins} min${diffMins !== 1 ? 's' : ''} ago`;
+  } else {
+    return `Just now`;
+  }
+};
+
 
   return (
     <div className="h-screen flex overflow-hidden bg-gray-50">
