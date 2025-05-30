@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
+import { Link,useParams, useSearchParams } from 'react-router-dom';
 import { Search, Filter, Plus, Calendar, Clock, CheckCircle2 } from 'lucide-react';
 import Card from '../components/ui/Card';
 import Badge from '../components/ui/Badge';
@@ -26,6 +26,7 @@ const CarePlans: React.FC = () => {
     goals: [{ goal: '', targetDate: '' }],
     meals: [''],
   });
+
 
 
   // Use patient ID from URL if provided
@@ -98,11 +99,11 @@ const CarePlans: React.FC = () => {
       setCarePlan({ ...carePlan, goals: updatedGoals });
     };
 
-  const handleMealChange = (index: number, value: string) => {
-  const updatedMeals = [...carePlan.meals];
-  updatedMeals[index] = value;
-  setCarePlan({ ...carePlan, meals: updatedMeals });
-};
+//   const handleMealChange = (index: number, value: string) => {
+//   const updatedMeals = [...carePlan.meals];
+//   updatedMeals[index] = value;
+//   setCarePlan({ ...carePlan, meals: updatedMeals });
+// };
 
 
   const addGoal = () => {
@@ -116,14 +117,14 @@ const CarePlans: React.FC = () => {
   }));
 };
 
-const removeMeal = (indexToRemove: number) => {
-  setCarePlan((prev) => ({
-    ...prev,
-    meals: prev.meals.filter((_, i) => i !== indexToRemove),
-  }));
-};
+// const removeMeal = (indexToRemove: number) => {
+//   setCarePlan((prev) => ({
+//     ...prev,
+//     meals: prev.meals.filter((_, i) => i !== indexToRemove),
+//   }));
+// };
 
-  const addMeal = () => {
+  const handleAddMealPlan = () => {
     setCarePlan({ ...carePlan, meals: [...carePlan.meals, ''] });
   };
 
@@ -187,7 +188,7 @@ const removeMeal = (indexToRemove: number) => {
           <div className="w-full sm:w-1/2 flex gap-2">
             <div className="relative flex-1">
               <select
-                className="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm rounded-md"
+                className="appearance-none block w-full pl-3 pr-10 py-2 text-base  border-gray-300 focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm rounded-md bg-white"
                 value={filterStatus}
                 onChange={(e) => setFilterStatus(e.target.value as CarePlan['status'] | 'all')}
               >
@@ -202,7 +203,7 @@ const removeMeal = (indexToRemove: number) => {
             </div>
             <div className="relative flex-1">
               <select
-                className="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm rounded-md"
+                className="appearance-none block w-full pl-3 pr-10 py-2 text-base  border-gray-300 focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm rounded-md bg-white"
                 value={filterPatientId}
                 onChange={(e) => setFilterPatientId(e.target.value)}
               >
@@ -303,160 +304,175 @@ const removeMeal = (indexToRemove: number) => {
           )}
         </div>
       </Card>
-    {showForm && (
-  <div
-    className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
-    onClick={() => setShowForm(false)}
-  >
-    <div
-      className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-xl"
-      onClick={(e) => e.stopPropagation()}
-    >
-      <div className="flex justify-between items-center p-6 border-b border-gray-200">
-        <h2 className="text-2xl font-semibold text-gray-900">Create Care Plan</h2>
-        <button
+        {showForm && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
           onClick={() => setShowForm(false)}
-          className="text-gray-400 hover:text-gray-500"
         >
-        </button>
-      </div>
-
-      <form onSubmit={handleSubmit} className="p-6 space-y-6">
-        <Input
-          label="Patient Name"
-          name="name"
-          placeholder="Enter patient name"
-          value={carePlan.name}
-          onChange={handleChange}
-          required
-          fullWidth
-        />
-
-        <Input
-          label="Plan Name"
-          name="plan"
-          placeholder="Enter plan name"
-          value={carePlan.plan}
-          onChange={handleChange}
-          required
-          fullWidth
-        />
-
-        <div className="grid grid-cols-2 gap-4">
-          <Input
-            label="Start Date"
-            name="startDate"
-            type="date"
-            value={carePlan.startDate}
-            onChange={handleChange}
-            required
-            fullWidth
-          />
-          <Input
-            label="End Date"
-            name="endDate"
-            type="date"
-            value={carePlan.endDate}
-            onChange={handleChange}
-            required
-            fullWidth
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
-          <textarea
-            name="description"
-            placeholder="Enter care plan description"
-            value={carePlan.description}
-            onChange={handleChange}
-            rows={4}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
-          />
-        </div>
-
-        {/* Goals Section */}
-        <div>
-          <h4 className="text-xl font-semibold mt-6 mb-2">Goals</h4>
-          {carePlan.goals.map((goal, index) => (
-            <div key={index} className="flex gap-4 items-end mb-2">
-              <Input
-                label="Goal"
-                value={goal.goal}
-                onChange={(e) => handleGoalChange(index, 'goal', e.target.value)}
-                fullWidth
-              />
-              <Input
-                label="Target Date"
-                type="date"
-                value={goal.targetDate}
-                onChange={(e) => handleGoalChange(index, 'targetDate', e.target.value)}
-                fullWidth
-              />
+          <div
+            className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] shadow-xl overflow-hidden"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Modal Header */}
+            <div className="flex justify-between items-center p-6 border-b border-gray-200">
+              <h2 className="text-2xl font-semibold text-gray-900">Create Care Plan</h2>
               <button
-                type="button"
-                onClick={() => removeGoal(index)}
-                className="text-red-500 text-xl font-bold px-2 hover:text-red-700"
-                title="Remove Goal"
+                onClick={() => setShowForm(false)}
+                className="text-gray-400 hover:text-gray-500 text-xl font-bold"
               >
                 ✕
               </button>
             </div>
-          ))}
-          <Button type="button" variant="primary" onClick={addGoal}>
-            + Add Goal
-          </Button>
-        </div>
 
-        {/* Meals Section */}
-        <div>
-          <h4 className="text-xl font-semibold mt-6 mb-2">Meals</h4>
-          {carePlan.meals.map((meal, index) => (
-            <div key={index} className="mb-2 flex items-end gap-4">
-              <div className="flex-1">
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Meal {index + 1}
-                </label>
-                <select
-                  value={meal}
-                  onChange={(e) => handleMealChange(index, e.target.value)}
+            {/* Form */}
+            <form onSubmit={handleSubmit} className="p-6 space-y-6 max-h-[300px] overflow-y-auto">
+              {/* Plan Name */}
+              <Input
+                label="Plan Name"
+                name="plan"
+                placeholder="Enter plan name"
+                value={carePlan.plan}
+                onChange={handleChange}
+                required
+                fullWidth
+              />
+
+              {/* Description */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                <textarea
+                  name="description"
+                  placeholder="Enter care plan description"
+                  value={carePlan.description}
+                  onChange={handleChange}
+                  rows={4}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
-                >
-                  <option value="">Select Meal</option>
-                  <option value="Breakfast">Breakfast</option>
-                  <option value="Lunch">Lunch</option>
-                  <option value="Dinner">Dinner</option>
-                  <option value="Snacks">Snacks</option>
-                </select>
+                />
               </div>
-              <button
-                type="button"
-                onClick={() => removeMeal(index)}
-                className="text-red-500 text-xl font-bold px-2 hover:text-red-700"
-                title="Remove Meal"
-              >
-                ✕
-              </button>
-            </div>
-          ))}
-          <Button type="button" variant="primary" onClick={addMeal}>
-            + Add Meal
-          </Button>
-        </div>
 
-        {/* Action Buttons */}
-        <div className="flex justify-end space-x-4 pt-4">
-          <Button variant="outline" onClick={() => setShowForm(false)}>
-            Close
-          </Button>
-          <Button variant="primary" type="submit">
-            Submit Care Plan
-          </Button>
+              {/* Goals */}
+              <div>
+                <h4 className="text-xl font-semibold mt-6 mb-2">Goals</h4>
+                {carePlan.goals.map((goal, index) => (
+                  <div key={index} className="flex gap-4 items-end mb-2">
+                    <Input
+                      label="Goal Name"
+                      value={goal.goal}
+                      onChange={(e) => handleGoalChange(index, 'goal', e.target.value)}
+                      fullWidth
+                    />
+                    <button
+                      type="button"
+                      onClick={() => removeGoal(index)}
+                      className="text-red-500 text-xl font-bold px-2 hover:text-red-700"
+                      title="Remove Goal"
+                    >
+                      ✕
+                    </button>
+                  </div>
+                ))}
+                <Button type="button" variant="primary" onClick={addGoal}>
+                  + Add Goal
+                </Button>
+              </div>
+
+              {/* Meal Plan Section */}
+              <div>
+                <h4 className="text-xl font-semibold mt-6 mb-2">Meals</h4>
+
+                <div className="max-h-[300px] overflow-y-auto space-y-4 pr-2">
+                  {carePlans.length === 0 ? (
+                    <div className="text-center py-6 text-gray-500">
+                      No meal plans have been added to this care plan
+                    </div>
+                  ) : (
+                    carePlans.map((plan) => (
+                      <div
+                        key={plan.id}
+                        className="border border-gray-200 rounded-lg overflow-hidden"
+                      >
+                        <div className="bg-gray-50 px-4 py-3 border-b border-gray-200">
+                          <h3 className="text-base font-medium text-gray-900">{plan.title}</h3>
+                        </div>
+
+                        {plan.meals.map((mealPlan) => (
+                          <div
+                            key={mealPlan.id}
+                            className="border-t border-gray-200 p-4"
+                          >
+                            <div className="flex justify-between items-center mb-2">
+                              <h4 className="text-sm font-medium text-gray-900">{mealPlan.name}</h4>
+                              <Badge variant="info">
+                                {mealPlan.schedule === 'daily' ? 'Daily' : 'Weekly'}
+                              </Badge>
+                            </div>
+                            <p className="text-sm text-gray-600 mb-3">{mealPlan.description}</p>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                              {mealPlan.meals.map((meal) => (
+                                <div
+                                  key={meal.id}
+                                  className="flex border border-gray-200 rounded-lg overflow-hidden"
+                                >
+                                  {meal.image && (
+                                    <div className="w-24 h-24 flex-shrink-0">
+                                      <img
+                                        src={meal.image}
+                                        alt={meal.name}
+                                        className="w-full h-full object-cover"
+                                      />
+                                    </div>
+                                  )}
+                                  <div className="p-3 flex-1">
+                                    <h6 className="font-medium text-gray-900">{meal.name}</h6>
+                                    <p className="text-xs text-gray-600 mt-1">{meal.description}</p>
+                                    <div className="mt-2 flex flex-wrap gap-2">
+                                      <span className="inline-flex items-center text-xs bg-blue-50 text-blue-700 rounded px-2 py-0.5">
+                                        {meal.nutritionalInfo?.calories} cal
+                                      </span>
+                                      <span className="inline-flex items-center text-xs bg-green-50 text-green-700 rounded px-2 py-0.5">
+                                        {meal.nutritionalInfo?.protein}g protein
+                                      </span>
+                                      <span className="inline-flex items-center text-xs bg-yellow-50 text-yellow-700 rounded px-2 py-0.5">
+                                        {meal.nutritionalInfo?.carbs}g carbs
+                                      </span>
+                                      <span className="inline-flex items-center text-xs bg-red-50 text-red-700 rounded px-2 py-0.5">
+                                        {meal.nutritionalInfo?.fat}g fat
+                                      </span>
+                                    </div>
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    ))
+                  )}
+                </div>
+
+                {/* Add Meal Plan Button */}
+                <div className="mt-4">
+                  <Button variant="secondary" size="sm" onClick={handleAddMealPlan}>
+                    + Add Meal Plan
+                  </Button>
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex justify-end space-x-4 pt-4">
+                <Button variant="outline" onClick={() => setShowForm(false)}>
+                  Close
+                </Button>
+                <Button variant="primary" type="submit">
+                  Create Care Plan
+                </Button>
+              </div>
+            </form>
+          </div>
         </div>
-      </form>
-    </div>
-  </div>
-    )}
+      )}
+
     </div>
   );
 };
