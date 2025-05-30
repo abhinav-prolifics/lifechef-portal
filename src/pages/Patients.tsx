@@ -1,6 +1,7 @@
 import { AlertTriangle, Filter, Search, SortAsc, SortDesc } from "lucide-react";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import AddCarePlanModal from "../components/patients/addCarePlanModal";
 import AddPatientModal from "../components/patients/AddPatientModal";
 import Avatar from "../components/ui/Avatar";
 import Badge from "../components/ui/Badge";
@@ -17,6 +18,7 @@ const Patients: React.FC = () => {
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
   const [filterCondition, setFilterCondition] = useState<string | null>(null);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+   const [showCarePlanModal, setShowCarePlanModal] = useState(false);
 
   // Get unique conditions from all patients
   const allConditions = Array.from(
@@ -288,12 +290,13 @@ const Patients: React.FC = () => {
                       >
                         View
                       </Link>
-                      <Link
+                      {/* <Link
                         to={`/care-plans?patient=${patient.id}`}
                         className="text-emerald-600 hover:text-emerald-900"
                       >
                         Care Plan
-                      </Link>
+                      </Link> */}
+                      <button  className="text-emerald-600 hover:text-emerald-900 mr-4" onClick={()=>setShowCarePlanModal(true)}>Add Care PLan</button>
                     </td>
                   </tr>
                 ))
@@ -302,7 +305,7 @@ const Patients: React.FC = () => {
           </table>
         </div>
       </Card>
-
+<AddCarePlanModal showModal={showCarePlanModal} onClose={()=>{setShowCarePlanModal(false)}} ></AddCarePlanModal>
       <AddPatientModal
         isOpen={isAddModalOpen}
         onClose={() => setIsAddModalOpen(false)}
