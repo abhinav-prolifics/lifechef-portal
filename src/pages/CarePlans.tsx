@@ -394,86 +394,86 @@ const toggleMealPlan = (id: string) => {
 
               {/* Meal Plan Section */}
              <div>
-      <h4 className="text-xl font-semibold mt-6 mb-2">Meals</h4>
+              <h4 className="text-xl font-semibold mt-6 mb-2">Meals</h4>
 
-      <div className="max-h-[300px] overflow-y-auto space-y-4 pr-2">
-        {allMealPlans.length === 0 ? (
-          <div className="text-center py-6 text-gray-500">
-            No meal plans available
-          </div>
-        ) : (
-          allMealPlans.map((mealPlan) => (
-            <div
-              key={mealPlan.id}
-              className="border border-gray-200 rounded-lg overflow-hidden"
-            >
-              <div className="flex justify-between items-center p-4">
-                <div>
-                  <h4 className="text-sm font-medium text-gray-900">{mealPlan.name}</h4>
-                  <p className="text-sm text-gray-600">{mealPlan.description}</p>
-                  <Badge variant="info" className="mt-1">{mealPlan.schedule}</Badge>
-                </div>
-
-                <div className="flex gap-2 items-center">
-                  <Button
-                    size="sm"
-                    variant="ghost"
-                    onClick={() => toggleMealPlan(mealPlan.id)}
-                  >
-                    {expandedPlans.includes(mealPlan.id) ? "Hide Meals" : "Show Meals"}
-                  </Button>
-                  <Button
-                    size="sm"
-                    variant={selectedMealPlans.includes(mealPlan.id) ? "destructive" : "secondary"}
-                    onClick={() => toggleSelect(mealPlan.id)}
-                  >
-                    {selectedMealPlans.includes(mealPlan.id) ? "Remove" : "Select"}
-                  </Button>
-                </div>
-              </div>
-
-              {expandedPlans.includes(mealPlan.id) && (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 pt-0">
-                  {mealPlan.meals.map((meal) => (
+              <div className="max-h-[300px] overflow-y-auto space-y-4 pr-2">
+                {allMealPlans.length === 0 ? (
+                  <div className="text-center py-6 text-gray-500">
+                    No meal plans available
+                  </div>
+                ) : (
+                  allMealPlans.map((mealPlan) => (
                     <div
-                      key={meal.id}
-                      className="flex border border-gray-200 rounded-lg overflow-hidden"
+                      key={mealPlan.id}
+                      className="border border-gray-200 rounded-lg overflow-hidden"
                     >
-                      {meal.image && (
-                        <div className="w-24 h-24 flex-shrink-0">
-                          <img
-                            src={meal.image}
-                            alt={meal.name}
-                            className="w-full h-full object-cover"
-                          />
+                      <div className="flex justify-between items-center p-4">
+                        <div>
+                          <h4 className="text-sm font-medium text-gray-900">{mealPlan.name}</h4>
+                          <p className="text-sm text-gray-600">{mealPlan.description}</p>
+                          <Badge variant="info" className="mt-1">{mealPlan.schedule}</Badge>
                         </div>
-                      )}
-                      <div className="p-3 flex-1">
-                        <h6 className="font-medium text-gray-900">{meal.name}</h6>
-                        <p className="text-xs text-gray-600 mt-1">{meal.description}</p>
-                        <div className="mt-2 flex flex-wrap gap-2">
-                          <span className="inline-flex text-xs bg-blue-50 text-blue-700 rounded px-2 py-0.5">
-                            {meal.nutritionalInfo?.calories} cal
-                          </span>
-                          <span className="inline-flex text-xs bg-green-50 text-green-700 rounded px-2 py-0.5">
-                            {meal.nutritionalInfo?.protein}g protein
-                          </span>
-                          <span className="inline-flex text-xs bg-yellow-50 text-yellow-700 rounded px-2 py-0.5">
-                            {meal.nutritionalInfo?.carbs}g carbs
-                          </span>
-                          <span className="inline-flex text-xs bg-red-50 text-red-700 rounded px-2 py-0.5">
-                            {meal.nutritionalInfo?.fat}g fat
-                          </span>
+
+                        <div className="flex gap-2 items-center">
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            onClick={() => toggleMealPlan(mealPlan.id)}
+                          >
+                            {expandedPlans.includes(mealPlan.id) ? "Hide Meals" : "Show Meals"}
+                          </Button>
+                          <Button
+                            size="sm"
+                            variant={selectedMealPlans.includes(mealPlan.id) ? "destructive" : "secondary"}
+                            onClick={() => toggleSelect(mealPlan.id)}
+                          >
+                            {selectedMealPlans.includes(mealPlan.id) ? "Remove" : "Select"}
+                          </Button>
                         </div>
                       </div>
+
+                      {expandedPlans.includes(mealPlan.id) && (
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 pt-0">
+                          {mealPlan.meals.map((meal) => (
+                            <div
+                              key={meal.id}
+                              className="flex border border-gray-200 rounded-lg overflow-hidden"
+                            >
+                              {meal.image && (
+                                <div className="w-24 h-24 flex-shrink-0">
+                                  <img
+                                    src={meal.image}
+                                    alt={meal.name}
+                                    className="w-full h-full object-cover"
+                                  />
+                                </div>
+                              )}
+                              <div className="p-3 flex-1">
+                                <h6 className="font-medium text-gray-900">{meal.name}</h6>
+                                <p className="text-xs text-gray-600 mt-1">{meal.description}</p>
+                                <div className="mt-2 flex flex-wrap gap-2">
+                                  <span className="inline-flex text-xs bg-blue-50 text-blue-700 rounded px-2 py-0.5">
+                                    {meal.nutritionalInfo?.calories} cal
+                                  </span>
+                                  <span className="inline-flex text-xs bg-green-50 text-green-700 rounded px-2 py-0.5">
+                                    {meal.nutritionalInfo?.protein}g protein
+                                  </span>
+                                  <span className="inline-flex text-xs bg-yellow-50 text-yellow-700 rounded px-2 py-0.5">
+                                    {meal.nutritionalInfo?.carbs}g carbs
+                                  </span>
+                                  <span className="inline-flex text-xs bg-red-50 text-red-700 rounded px-2 py-0.5">
+                                    {meal.nutritionalInfo?.fat}g fat
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
                     </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          ))
-        )}
-      </div>
+                  ))
+                )}
+              </div>
       {/* <div className="mt-4">
         <Button variant="secondary" size="sm" onClick={() => console.log(selectedMealPlans)}>
           + Add Meal Plan
