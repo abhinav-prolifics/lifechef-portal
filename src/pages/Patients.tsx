@@ -290,13 +290,13 @@ const Patients: React.FC = () => {
                       >
                         View
                       </Link>
-                      {/* <Link
+                      {(patient.id!=="p1" && patient.id!=="p4")?<Link
                         to={`/care-plans?patient=${patient.id}`}
                         className="text-emerald-600 hover:text-emerald-900"
                       >
                         Care Plan
-                      </Link> */}
-                      <button  className="text-emerald-600 hover:text-emerald-900 mr-4" onClick={()=>setShowCarePlanModal(true)}>Add Care PLan</button>
+                      </Link>:
+                      <button  className="text-emerald-600 hover:text-emerald-900" onClick={()=>setShowCarePlanModal(true)}>Add PLan</button>}
                     </td>
                   </tr>
                 ))

@@ -1,9 +1,9 @@
-import React, { useState , useEffect } from "react";
-import { carePlans, allMealPlans } from "../../data/mockData";
-import { CarePlan } from "../../types";
+import React, { useEffect, useState } from "react";
+import { allMealPlans, carePlans } from "../../data/mockData";
+// import { CarePlan } from "../../types";
+import Badge from "../ui/Badge";
 import Button from "../ui/Button";
 import Input from "../ui/Input";
-import Badge from "../ui/Badge";
 
 interface AddCarePlanModalProps {
   showModal: boolean;
@@ -148,7 +148,7 @@ const AddCarePlanModal: React.FC<AddCarePlanModalProps> = ({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Submit logic here (e.g., API call or state update)
-    alert("Care plan added!");
+    // alert("Care plan added!");
     setCarePlan({
       name: "",
       plan: "",
@@ -226,6 +226,7 @@ const AddCarePlanModal: React.FC<AddCarePlanModalProps> = ({
           </div>
 
           {/* Goals Section */}
+         {selectedPlanId !=""&& <>
           <div>
             <h4 className="text-xl font-semibold mt-6 mb-2">Goals</h4>
             {carePlan.goals.map((goal, idx) => (
@@ -313,13 +314,15 @@ const AddCarePlanModal: React.FC<AddCarePlanModalProps> = ({
                           <Button
                             size="sm"
                             variant="ghost"
+                            type="button"
                             onClick={() => toggleMealPlan(plan!.id)}
                           >
                             {expandedPlans.includes(plan!.id) ? "Hide Meals" : "Show Meals"}
                           </Button>
                           <Button
                             size="sm"
-                            variant="destructive"
+                            type="button"
+                            variant="danger"
                             onClick={() => removeMealPlan(plan!.id)}
                           >
                             Remove
@@ -383,7 +386,7 @@ const AddCarePlanModal: React.FC<AddCarePlanModalProps> = ({
                   ))}
               </div>
             )}
-          </div>
+          </div></>}
 
           {/* Action Buttons */}
           <div className="flex justify-end space-x-4 pt-4">

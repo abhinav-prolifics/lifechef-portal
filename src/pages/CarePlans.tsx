@@ -1,13 +1,12 @@
+import { Calendar, CheckCircle2, Clock, Filter, Plus, Search } from 'lucide-react';
 import React, { useState } from 'react';
-import { Link,useParams, useSearchParams } from 'react-router-dom';
-import { Search, Filter, Plus, Calendar, Clock, CheckCircle2 } from 'lucide-react';
-import Card from '../components/ui/Card';
+import { Link, useSearchParams } from 'react-router-dom';
 import Badge from '../components/ui/Badge';
 import Button from '../components/ui/Button';
+import Card from '../components/ui/Card';
 import Input from '../components/ui/Input';
 import { allMealPlans, carePlans, patients } from '../data/mockData';
 import { CarePlan, Goal } from '../types';
-import { v4 as uuidv4 } from 'uuid';
 
 const CarePlans: React.FC = () => {
   const [searchParams] = useSearchParams();
@@ -146,7 +145,7 @@ const toggleMealPlan = (id: string) => {
 
  const handleSubmit = (e: React.FormEvent) => {
   e.preventDefault();
-  alert('Care plan added!');
+  // alert('Care plan added!');
 
   // ✅ Reset the form by setting it back to the initial shape
   setCarePlan({
@@ -326,7 +325,7 @@ const toggleMealPlan = (id: string) => {
           onClick={() => setShowForm(false)}
         >
           <div
-            className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] shadow-xl overflow-hidden"
+            className="bg-white rounded-lg max-w-4xl w-full h-[90vh] shadow-xl overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Modal Header */}
@@ -341,7 +340,7 @@ const toggleMealPlan = (id: string) => {
             </div>
 
             {/* Form */}
-            <form onSubmit={handleSubmit} className="p-6 space-y-6 max-h-[300px] overflow-y-auto">
+            <form onSubmit={handleSubmit} className="p-6 space-y-6 max-h-[80vh] overflow-y-auto">
               {/* Plan Name */}
               <Input
                 label="Plan Name"
@@ -349,7 +348,7 @@ const toggleMealPlan = (id: string) => {
                 placeholder="Enter plan name"
                 value={carePlan.plan}
                 onChange={handleChange}
-                required
+                
                 fullWidth
               />
 
@@ -418,13 +417,15 @@ const toggleMealPlan = (id: string) => {
                           <Button
                             size="sm"
                             variant="ghost"
+                            type="button"
                             onClick={() => toggleMealPlan(mealPlan.id)}
                           >
                             {expandedPlans.includes(mealPlan.id) ? "Hide Meals" : "Show Meals"}
                           </Button>
                           <Button
                             size="sm"
-                            variant={selectedMealPlans.includes(mealPlan.id) ? "destructive" : "secondary"}
+                            type="button"
+                            variant={selectedMealPlans.includes(mealPlan.id) ? "danger" : "secondary"}
                             onClick={() => toggleSelect(mealPlan.id)}
                           >
                             {selectedMealPlans.includes(mealPlan.id) ? "Remove" : "Select"}
