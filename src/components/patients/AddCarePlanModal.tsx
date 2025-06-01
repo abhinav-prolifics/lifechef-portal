@@ -232,10 +232,10 @@ const AddCarePlanModal: React.FC<AddCarePlanModalProps> = ({
             {carePlan.goals.map((goal, idx) => (
               <div key={idx} className="flex gap-4 items-end mb-2">
                 <Input
-                  label="Goal"
                   value={goal.goal}
                   onChange={(e) => handleGoalChange(idx, "goal", e.target.value)}
                   fullWidth
+                  className="mt-1"
                 />
                 <Input
                   label="Target Date"
