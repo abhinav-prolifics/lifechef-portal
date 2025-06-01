@@ -133,8 +133,8 @@ const AddCarePlanModal: React.FC<AddCarePlanModalProps> = ({
       setCarePlan({
         ...carePlan,
         plan: selected.title,
-        startDate: selected.startDate.split("T")[0],
-        endDate: selected.endDate.split("T")[0],
+        startDate: "",
+        endDate: "",
         description: selected.description,
         goals: selected.goals.map((g) => ({
           goal: g.description,

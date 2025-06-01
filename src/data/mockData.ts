@@ -187,8 +187,8 @@ export const carePlans: CarePlan[] = [
     description: 'Comprehensive plan to manage Type 2 Diabetes and reduce HbA1c levels',
     createdAt: '2025-05-10T09:00:00Z',
     updatedAt: '2025-06-12T14:30:00Z',
-    startDate: '',
-    endDate: '',
+    startDate: '2025-05-15T00:00:00Z',
+    endDate: '2025-08-15T00:00:00Z',
     status: 'active',
     goals: [
       {
@@ -253,8 +253,8 @@ export const carePlans: CarePlan[] = [
     description: 'Dietary and lifestyle plan to improve cardiovascular health',
     createdAt: '2025-04-20T10:15:00Z',
     updatedAt: '2025-06-10T11:45:00Z',
-    startDate: '',
-    endDate: '',
+    startDate: '2025-05-01T00:00:00Z',
+    endDate: '2025-11-01T00:00:00Z',
     status: 'active',
     goals: [
       {
@@ -301,8 +301,8 @@ export const carePlans: CarePlan[] = [
     description: 'Calorie-controlled meal plan with physical activity recommendations',
     createdAt: '2025-06-01T13:30:00Z',
     updatedAt: '2025-06-15T16:20:00Z',
-    startDate: '',
-    endDate: '',
+    startDate: '2025-06-05T00:00:00Z',
+    endDate: '2025-12-05T00:00:00Z',
     status: 'active',
     goals: [
       {
