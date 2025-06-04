@@ -1,6 +1,6 @@
 import { Calendar, CheckCircle2, Clock, Filter, Plus, Search } from 'lucide-react';
 import React, { useState } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams  } from 'react-router-dom';
 import Badge from '../components/ui/Badge';
 import Button from '../components/ui/Button';
 import Card from '../components/ui/Card';
@@ -8,9 +8,12 @@ import Input from '../components/ui/Input';
 import { allMealPlans, carePlans, patients } from '../data/mockData';
 import { CarePlan, Goal } from '../types';
 
+
+
 const CarePlans: React.FC = () => {
   const [searchParams] = useSearchParams();
   const patientIdFromUrl = searchParams.get('patient');
+  const hasPatientParam = searchParams.has('patient');
   
   const [searchTerm, setSearchTerm] = useState('');
   const [filterStatus, setFilterStatus] = useState<CarePlan['status'] | 'all'>('all');
@@ -255,14 +258,16 @@ const toggleMealPlan = (id: string) => {
                     >
                       {plan.title}
                     </Link>
-                    <p className="text-sm text-gray-500 mt-1">
-                      <Link 
-                        to={`/patients/${plan.patientId}`}
-                        className="hover:text-emerald-600"
-                      >
-                        {getPatientName(plan.patientId)}
-                      </Link>
-                    </p>
+                    {hasPatientParam && (
+                      <p className="text-sm text-gray-500 mt-1">
+                        <Link 
+                          to={`/patients/${plan.patientId}`}
+                          className="hover:text-emerald-600"
+                        >
+                          {getPatientName(plan.patientId)}
+                        </Link>
+                      </p>
+                    )}
                   </div>
                   <div>
                     {getStatusBadge(plan.status)}
@@ -274,20 +279,26 @@ const toggleMealPlan = (id: string) => {
                 </p>
                 
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mt-4">
-                  <div className="flex items-center text-sm">
-                    <Calendar className="h-4 w-4 text-gray-500 mr-2" />
-                    <div>
-                      <p className="text-xs text-gray-500">Start Date</p>
-                      <p className="font-medium">{formatDate(plan.startDate)}</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center text-sm">
-                    <Calendar className="h-4 w-4 text-gray-500 mr-2" />
-                    <div>
-                      <p className="text-xs text-gray-500">End Date</p>
-                      <p className="font-medium">{formatDate(plan.endDate)}</p>
-                    </div>
-                  </div>
+                  {hasPatientParam && (
+                    <>
+                      <div className="flex items-center text-sm">
+                        <Calendar className="h-4 w-4 text-gray-500 mr-2" />
+                        <div>
+                          <p className="text-xs text-gray-500">Start Date</p>
+                          <p className="font-medium">{formatDate(plan.startDate)}</p>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center text-sm">
+                        <Calendar className="h-4 w-4 text-gray-500 mr-2" />
+                        <div>
+                          <p className="text-xs text-gray-500">End Date</p>
+                          <p className="font-medium">{formatDate(plan.endDate)}</p>
+                        </div>
+                      </div>
+                    </>
+                  )}
+
                   <div className="flex items-center text-sm">
                     <Clock className="h-4 w-4 text-gray-500 mr-2" />
                     <div>
@@ -295,20 +306,25 @@ const toggleMealPlan = (id: string) => {
                       <p className="font-medium">{formatDate(plan.updatedAt)}</p>
                     </div>
                   </div>
-                  <div className="flex items-center text-sm">
-                    <CheckCircle2 className="h-4 w-4 text-gray-500 mr-2" />
-                    <div>
-                      <p className="text-xs text-gray-500">Goal Completion</p>
-                      <p className="font-medium">
-                        {plan.goals.filter(g => g.status === 'achieved').length}/{plan.goals.length} Goals ({getGoalCompletionRate(plan)}%)
-                      </p>
+
+                  {hasPatientParam && (
+                    <div className="flex items-center text-sm">
+                      <CheckCircle2 className="h-4 w-4 text-gray-500 mr-2" />
+                      <div>
+                        <p className="text-xs text-gray-500">Goal Completion</p>
+                        <p className="font-medium">
+                          {plan.goals.filter((g) => g.status === 'achieved').length}/
+                          {plan.goals.length} Goals ({getGoalCompletionRate(plan)}%)
+                        </p>
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </div>
                 
                 <div className="mt-4 pt-4 border-t border-gray-100 flex justify-end">
                   <Link 
                     to={`/care-plans/${plan.id}`}
+                    state={{ fromPatientParam: hasPatientParam }}
                     className="text-sm font-medium text-emerald-600 hover:text-emerald-800"
                   >
                     View Details →

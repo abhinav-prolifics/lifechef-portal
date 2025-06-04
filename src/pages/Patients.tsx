@@ -294,9 +294,9 @@ const Patients: React.FC = () => {
                         to={`/care-plans?patient=${patient.id}`}
                         className="text-emerald-600 hover:text-emerald-900"
                       >
-                        Care Plan
+                        View Plan
                       </Link>:
-                      <button  className="text-emerald-600 hover:text-emerald-900" onClick={()=>setShowCarePlanModal(true)}>Add PLan</button>}
+                      <button  className="text-emerald-600 hover:text-emerald-900" onClick={()=>setShowCarePlanModal(true)}>Add Plan</button>}
                     </td>
                   </tr>
                 ))

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link , useLocation  } from 'react-router-dom';
 import { ArrowLeft, Calendar, Clock, CheckCircle2, Edit, Trash2, PlusCircle } from 'lucide-react';
 import Card from '../components/ui/Card';
 import Badge from '../components/ui/Badge';
@@ -10,6 +10,9 @@ import Avatar from '../components/ui/Avatar';
 const CarePlanDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const carePlan = carePlans.find(plan => plan.id === id);
+  const location = useLocation();
+  const fromPatientParam = location.state?.fromPatientParam ?? false;
+  
   
   if (!carePlan) {
     return (
@@ -94,26 +97,28 @@ const CarePlanDetail: React.FC = () => {
                 <p className="text-sm font-medium text-gray-500">Status</p>
                 <div className="mt-1">{getStatusBadge(carePlan.status)}</div>
               </div>
-              <div>
-                <p className="text-sm font-medium text-gray-500">Patient</p>
-                <div className="mt-1 flex items-center">
-                  {patient && (
-                    <>
-                      <Avatar 
-                        src={patient.avatar} 
-                        alt={patient.name} 
-                        size="sm" 
-                      />
-                      <Link 
-                        to={`/patients/${patient.id}`}
-                        className="ml-2 text-emerald-600 hover:text-emerald-800"
-                      >
-                        {patient.name}
-                      </Link>
-                    </>
-                  )}
+              {fromPatientParam && (
+                <div>
+                  <p className="text-sm font-medium text-gray-500">Patient</p>
+                  <div className="mt-1 flex items-center">
+                    {patient && (
+                      <>
+                        <Avatar 
+                          src={patient.avatar} 
+                          alt={patient.name} 
+                          size="sm" 
+                        />
+                        <Link 
+                          to={`/patients/${patient.id}`}
+                          className="ml-2 text-emerald-600 hover:text-emerald-800"
+                        >
+                          {patient.name} 
+                        </Link>
+                      </>
+                    )}
+                  </div>
                 </div>
-              </div>
+              )}
               <div>
                 <p className="text-sm font-medium text-gray-500">Created By</p>
                 <div className="mt-1 flex items-center">
@@ -142,20 +147,24 @@ const CarePlanDetail: React.FC = () => {
                   <p>{formatDate(carePlan.createdAt)}</p>
                 </div>
               </div>
-              <div className="flex items-center">
-                <Calendar className="h-5 w-5 text-gray-400 mr-3" />
-                <div>
-                  <p className="text-sm font-medium text-gray-500">Start Date</p>
-                  <p>{formatDate(carePlan.startDate)}</p>
+
+                {fromPatientParam && (<div>
+                  <div className="flex items-center">
+                    <Calendar className="h-5 w-5 text-gray-400 mr-3" />
+                    <div>
+                      <p className="text-sm font-medium text-gray-500">Start Date</p>
+                      <p>{formatDate(carePlan.startDate)}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center">
+                    <Calendar className="h-5 w-5 text-gray-400 mr-3" />
+                    <div>
+                      <p className="text-sm font-medium text-gray-500">End Date</p>
+                      <p>{formatDate(carePlan.endDate)}</p>
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div className="flex items-center">
-                <Calendar className="h-5 w-5 text-gray-400 mr-3" />
-                <div>
-                  <p className="text-sm font-medium text-gray-500">End Date</p>
-                  <p>{formatDate(carePlan.endDate)}</p>
-                </div>
-              </div>
+               )}
             </div>
           </div>
           
@@ -191,13 +200,14 @@ const CarePlanDetail: React.FC = () => {
                 <div className="flex justify-between items-start">
                   <div className="flex-1">
                     <h4 className="text-base font-medium text-gray-900">{goal.description}</h4>
-                    <div className="flex items-center mt-2 text-sm text-gray-500">
+                    {fromPatientParam &&(<div className="flex items-center mt-2 text-sm text-gray-500">
                       <Calendar className="h-4 w-4 mr-1" />
                       <span>Target: {formatDate(goal.targetDate)}</span>
                     </div>
+                    )}
                   </div>
                   <div className="flex items-center space-x-2">
-                    {getGoalStatusBadge(goal.status)}
+                   {fromPatientParam && ( <span>{getGoalStatusBadge(goal.status)} </span> )}
                     <button className="text-gray-400 hover:text-gray-600">
                       <Edit className="h-4 w-4" />
                     </button>
